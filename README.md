@@ -8,7 +8,7 @@ This repository combines **AI agent orchestration, personalized search, marketpl
 
 ## Why I Built This
 
-As a Product Manager with 16 years of experience across payments, e-commerce, and applied AI/ML, I'm interested in how agentic commerce will transform the relationship between buyers, AI assistants, and merchants.
+With a strong background in payments, e-commerce, and applied AI/ML, I’m passionate about exploring how agentic commerce is reshaping the way buyers discover and purchase products, AI assistants facilitate transactions, and merchants engage with customers.
 
 My goal is to go beyond product strategy and actively build, experiment, and validate the underlying technology.
 
