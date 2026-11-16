@@ -1,146 +1,131 @@
 # Agentic Commerce Lab
-### Building an AI-Powered Shopping Assistant
 
-**Python | OpenAI API | LLM Tool Calling | Agent Evaluation | E-Commerce**
+### Building intelligent, secure, and buyer-centric AI commerce experiences
 
-## Overview
+A hands-on product engineering lab exploring how **AI agents can collaborate with merchants** to deliver personalized shopping experiences, improve product discovery, and enable secure commerce transactions.
 
-An experimental AI shopping agent designed to transform traditional product discovery into an intelligent, conversational shopping experience.
+This repository combines **AI agent orchestration, personalized search, marketplace optimization, and agent–merchant authentication** in a working Python prototype.
 
-Instead of requiring customers to manually search, filter, and navigate checkout flows, the assistant interprets natural-language requests, discovers relevant products, and supports shopping-cart management and simulated checkout.
+## Why I Built This
 
-This project explores how AI agents can move beyond answering questions to executing meaningful commerce actions.
+As a Product Manager with 16 years of experience across payments, e-commerce, and applied AI/ML, I'm interested in how agentic commerce will transform the relationship between buyers, AI assistants, and merchants.
 
-## The Problem
+My goal is to go beyond product strategy and actively build, experiment, and validate the underlying technology.
 
-Traditional e-commerce experiences place significant effort on customers to:
+This lab explores a central question:
 
-- Translate their needs into search keywords.
-- Navigate multiple filters and product listings.
-- Compare products against preferences and constraints.
-- Manage shopping carts and complete checkout.
+**How can AI agents and merchants collaborate to improve buyer experiences and conversion while maintaining trust, relevance, and marketplace fairness?**
 
-**Product hypothesis:** An AI-powered shopping agent can reduce shopping friction by combining conversational understanding with reliable, controlled commerce actions.
+## Featured Project: AI Shopping Assistant
 
-## What I Built
+A conversational shopping agent that understands buyer needs, retrieves relevant products from a merchant catalog, manages shopping carts, and prepares simulated checkout transactions.
 
-### 1. Conversational Product Discovery
-- Interpret natural-language shopping requests.
-- Identify product requirements and preferences.
-- Recommend products based on available catalog information.
+### Key Capabilities
 
-### 2. Agent Tool Calling
-- Connect the LLM to a product search function.
-- Allow the agent to decide when product search is required.
-- Return structured product information for recommendations.
+**1. Conversational Product Discovery**
 
-### 3. Shopping Cart and Simulated Checkout
-- Support shopping-cart operations.
-- Simulate the checkout experience without initiating real payments.
-- Explore the transition from product recommendations to transactional actions.
+Uses OpenAI's Responses API and function calling to translate natural-language shopping requests into structured merchant search queries.
 
-### 4. Agent Evaluation and Reliability
-- Build an evaluation script to test shopping-agent behavior.
-- Examine failures across different test scenarios.
-- Iterate on agent instructions and tool behavior to improve reliability.
+**2. Buyer-Aware Personalized Search**
 
-### 5. Seller Exposure and Marketplace Fairness
-An ongoing enhancement explores reserving a configurable share of eligible recommendation slots for new sellers and unrated listings.
+Extracts explicitly shared buyer preferences, such as intended use, budget, battery life, and portability, and communicates them to the merchant's ranking engine.
 
-The design aims to balance:
-- Buyer relevance and satisfaction.
-- Strict compliance with buyer constraints.
-- Fair exposure for new marketplace participants.
+The merchant uses these insights to return more relevant product recommendations.
 
-## High-Level Architecture
+**3. New-Seller Exposure Optimization**
+
+Implements a configurable policy reserving 20% of eligible search-result slots for qualifying new sellers, without relaxing buyer hard constraints.
+
+**4. Secure Agent–Merchant Authentication**
+
+Introduces mutual TLS (mTLS) authentication so agents and merchants can validate software identities before exchanging commerce data.
+
+The development implementation is undergoing end-to-end validation.
+
+**5. Shopping Cart and Checkout**
+
+Supports adding and removing products, cart summaries, and simulated checkout with explicit buyer approval.
+
+No real payments are processed.
+
+**6. Agent Evaluation and Reliability**
+
+Includes a golden-dataset evaluation framework covering tool selection, search correctness, cart state, checkout safety, and recommendation behavior.
+
+## Architecture
 
 ```text
-Customer
-   |
-   v
-Natural Language Shopping Request
-   |
-   v
-LLM Shopping Agent
-   |
-   +--> Product Search Tool
-   |        |
-   |        v
-   |    Product Catalog
-   |
-   +--> Cart Management
-   |
-   +--> Simulated Checkout
-   |
-   v
-Customer Response
-
-Separate Evaluation Pipeline
-   |
-   +--> Test Scenarios
-   +--> Agent Outputs
-   +--> Failure Analysis
+Buyer
+  |
+  v
+Conversational AI Shopping Agent
+  |
+  +---- Buyer Intent & Preference Extraction
+  |
+  +---- Merchant Identity Verification (mTLS)
+  |          |
+  |          v
+  |     Merchant Search API
+  |          |
+  |          +---- Hard-Constraint Filtering
+  |          +---- Personalized Ranking
+  |          +---- New-Seller Exposure Policy
+  |          |
+  |          v
+  |     Product Recommendations
+  |
+  +---- Shopping Cart Management
+  |
+  +---- Simulated Checkout
+             |
+             v
+       Buyer Approval
 ```
 
-## Key Product and Technical Decisions
+## Technology Stack
 
-**Tool calling over free-form responses:** Product information should come from a defined search tool rather than relying on the model to invent product details.
+Python · OpenAI Responses API · Streamlit · FastAPI · Uvicorn · HTTPS/mTLS · OpenSSL · JSON · pytest · GitHub Codespaces
 
-**Simulated checkout before live payments:** A controlled environment enables validation of transactional behavior without exposing real payment credentials or processing transactions.
+## Explore the Project
 
-**Evaluation as part of development:** Agent quality requires testing not only response fluency but also tool selection, constraint adherence, and action correctness.
+**[AI Shopping Assistant — Source Code and Technical Documentation](shopping-assistant/)**
 
-**Marketplace fairness:** Recommendation quality must consider both customer relevance and healthy seller participation.
+The project directory contains the application, merchant API, personalized search logic, evaluation framework, and setup instructions.
 
-## Development Milestones
+## Product Hypotheses
 
-| Milestone | Status |
-|---|---|
-| Conversational shopping assistant | Completed |
-| Product search tool calling | Completed |
-| Cart management and simulated checkout | Completed |
-| Initial evaluation framework | Implemented; refinement ongoing |
-| New-seller exposure allocation | In progress |
+This lab is designed to investigate three hypotheses:
 
-## Evaluation Focus
+- **Personalization:** Sharing buyer-authorized preferences with merchant search systems can improve relevance and purchase conversion.
+- **Marketplace fairness:** Reserved exposure for eligible new sellers can improve discovery opportunities without violating buyer constraints.
+- **Agent trust:** Verifiable software identity and explicit buyer authorization can support safer agent-driven commerce.
 
-The evaluation framework explores:
+These are hypotheses for experimentation, not validated business outcomes.
 
-- **Tool selection:** Did the agent call the correct tool?
-- **Constraint adherence:** Did recommendations satisfy hard buyer requirements?
-- **Groundedness:** Were product details supported by catalog data?
-- **Transaction correctness:** Were cart and checkout actions performed as expected?
-- **Reliability:** How consistently does the agent handle varied shopping scenarios?
+## Roadmap
 
-The initial evaluation run identified failing scenarios, providing opportunities for further debugging and refinement.
-
-## Future Roadmap
-
-- Improve agent evaluation coverage and reliability.
-- Validate seller-exposure allocation against relevance metrics.
-- Add persistent shopping-cart state.
-- Explore payment integrations and transaction authorization.
-- Introduce richer product catalogs and comparison capabilities.
-- Explore interoperability standards for agentic commerce.
-
-## Why This Project Matters
-
-Agentic commerce introduces new product challenges beyond traditional search and checkout:
-
-- How much autonomy should a shopping agent have?
-- How do we prevent hallucinated product recommendations?
-- When should the customer explicitly approve an action?
-- How do we balance marketplace fairness with buyer relevance?
-- How should agent quality be measured before deployment?
-
-This project is an opportunity to explore those questions through working software and iterative product experimentation.
+- [x] Conversational AI shopping assistant
+- [x] Structured product search and function calling
+- [x] Shopping cart and simulated checkout
+- [x] Personalized merchant search
+- [x] New-seller exposure allocation
+- [x] Agent evaluation framework foundation
+- [x] Development mTLS integration
+- [ ] Complete end-to-end mTLS validation
+- [ ] Agent identity registry and scoped authorization
+- [ ] Conversion experimentation and analytics
+- [ ] Multi-merchant discovery
+- [ ] Agentic commerce protocol integrations
+- [ ] Payment sandbox integration
 
 ## About the Builder
 
-Built by **Soumya Chanduri**, a Product Manager with 16 years of experience across AI/ML, payments, and e-commerce.
+I'm a Product Manager specializing in **Payments, Applied AI/ML, and e-commerce platforms**, with experience delivering AI-powered financial assistants, machine-learning optimization solutions, and large-scale payment integrations.
 
-My professional experience includes building AI evaluation frameworks, ML-powered payment optimization, revenue forecasting, and large-scale marketplace payment experiences.
+My focus is on combining product strategy with hands-on technical execution—building prototypes, evaluating their performance, and translating emerging technologies into measurable customer and business outcomes.
 
-This repository reflects my interest in combining product strategy with hands-on technical implementation.
+**GitHub:** [soumyachanduri-labs](https://github.com/soumyachanduri-labs)
 
-**GitHub:** https://github.com/soumyachanduri-labs
+---
+
+*An evolving experimental project. Not intended for production commerce or real payment processing.*
