@@ -30,7 +30,7 @@ Uses OpenAI's Responses API and function calling to translate natural-language s
 
 Extracts explicitly shared buyer preferences, such as intended use, budget, battery life, and portability, and communicates them to the merchant's ranking engine.
 
-The merchant uses these insights to return more relevant product recommendations.
+The merchant uses these insights to return more relevant product recommendations. The merchant's search algorithm is not exposed to the LLM, just the results of the search are shared.
 
 **3. New-Seller Exposure Optimization**
 
